@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Assignment.Services.BookStore.API</name>
+    </assembly>
+    <members>
+        <member name="T:Assignment.Services.BookStore.API.Controllers.BooksController">
+            <summary>
+            Controller class to receive incoming REST API request.
+            </summary>
+        </member>
+        <member name="F:Assignment.Services.BookStore.API.Controllers.BooksController.bookManager">
+            <summary>
+            Manager class to deal with the business logic.
+            </summary>
+        </member>
+        <member name="F:Assignment.Services.BookStore.API.Controllers.BooksController.logger">
+            <summary>
+            Represents object to deal with logging.
+            </summary>
+        </member>
+        <member name="M:Assignment.Services.BookStore.API.Controllers.BooksController.#ctor(Assignment.Services.BookStore.Infrastructure.Managers.Contracts.IBookManager,Microsoft.Extensions.Logging.ILogger{Assignment.Services.BookStore.API.Controllers.BooksController})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Assignment.Services.BookStore.API.Controllers.BooksController"/> class.
+            </summary>
+            <param name="bookManager">Manager class to deal with the business logic.</param>
+            <param name="logger">Represents object to deal with logging.</param>
+        </member>
+        <member name="M:Assignment.Services.BookStore.API.Controllers.BooksController.AddAsync(Assignment.Services.BookStore.Infrastructure.Models.BookDetails)">
+            <summary>
+            Adds a new book.
+            </summary>
+            <param name="bookDetails">Details of the resource to be added.</param>
+            <returns>Created object.</returns>
+        </member>
+        <member name="M:Assignment.Services.BookStore.API.Controllers.BooksController.GetAllAsync">
+            <summary>
+            Get all the books from the repository.
+            </summary>
+            <returns>List of books.</returns>
+        </member>
+        <member name="M:Assignment.Services.BookStore.API.Controllers.BooksController.GetAsync(System.Guid)">
+            <summary>
+            Get the book based on the book identifier.
+            </summary>
+            <param name="id">Identifier for the book.</param>
+            <returns>Book based on Identifier.</returns>
+        </member>
+        <member name="M:Assignment.Services.BookStore.API.Controllers.BooksController.UpdateAsync(System.Guid,Assignment.Services.BookStore.Infrastructure.Models.BookDetails)">
+            <summary>
+            Update the book details.
+            </summary>
+            <param name="id">Identifier for the book.</param>
+            <param name="bookDetails">Details of the book to be updated.</param>
+            <returns>Status whether the book details are updated.</returns>
+        </member>
+        <member name="T:Assignment.Services.BookStore.API.Controllers.ErrorsController">
+            <summary>
+            Book controller to receive incoming REST API request.
+            </summary>
+        </member>
+        <member name="F:Assignment.Services.BookStore.API.Controllers.ErrorsController.logger">
+            <summary>
+            Represents logger to deal with the error logger controller.
+            </summary>
+        </member>
+        <member name="M:Assignment.Services.BookStore.API.Controllers.ErrorsController.#ctor(Microsoft.Extensions.Logging.ILogger{Assignment.Services.BookStore.API.Controllers.ErrorsController})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Assignment.Services.BookStore.API.Controllers.ErrorsController"/> class.
+            </summary>
+            <param name="logger">Application logger object.</param>
+        </member>
+        <member name="M:Assignment.Services.BookStore.API.Controllers.ErrorsController.Error">
+            <summary>
+            Handles global errors.
+            </summary>
+            <returns>Internal server error details.</returns>
+        </member>
+        <member name="T:Assignment.Services.BookStore.API.Program">
+            <summary>
+            Class for hosting the web api.
+            </summary>
+        </member>
+        <member name="M:Assignment.Services.BookStore.API.Program.Main(System.String[])">
+            <summary>
+            Configure and run the web application.
+            </summary>
+            <param name="args">Array of arguments.</param>
+        </member>
+        <member name="M:Assignment.Services.BookStore.API.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Create web host to host web application.
+            </summary>
+            <param name="args">Array of arguments.</param>
+            <returns>Web Host Object.</returns>
+        </member>
+        <member name="T:Assignment.Services.BookStore.API.Startup">
+            <summary>
+            Class for configuring the application.
+            </summary>
+        </member>
+        <member name="M:Assignment.Services.BookStore.API.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Assignment.Services.BookStore.API.Startup"/> class.
+            </summary>
+            <param name="configuration">Application configuration objects.</param>
+        </member>
+        <member name="P:Assignment.Services.BookStore.API.Startup.Configuration">
+            <summary>
+            Gets the application configuration objects.
+            </summary>
+        </member>
+        <member name="M:Assignment.Services.BookStore.API.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configure services called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services">Service collection.</param>
+        </member>
+        <member name="M:Assignment.Services.BookStore.API.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Configure called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="applicationBuilder">Application builder class.</param>
+            <param name="webHostEnvironment">Web hosting environment.</param>
+        </member>
+    </members>
+</doc>
