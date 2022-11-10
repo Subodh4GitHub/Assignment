@@ -49,6 +49,8 @@ namespace Assignment.Services.BookStore.API.IntegrationTests
             mockLogger = new Mock<ILogger<BooksController>>();
         }
 
+        // positive test
+
         /// <summary>
         /// AddAsync should add the book when model is valid
         /// </summary>
@@ -114,7 +116,7 @@ namespace Assignment.Services.BookStore.API.IntegrationTests
         /// GetAsync should return the book based on identifier when no database exception is thrown.
         /// </summary>
         [TestMethod]
-        public void GetAsyncShouldReturnAllBooksWhenNoDatabaseException()
+        public void GetAsyncShouldReturnABookWhenNoDatabaseException()
         {
             // arrange
             mockBookRepository.Setup(x => x.GetBookAsync(It.IsAny<Guid>())).ReturnsAsync(new Book()
@@ -160,6 +162,73 @@ namespace Assignment.Services.BookStore.API.IntegrationTests
 
             // assert
             Assert.IsNotNull(result?.Value.ToString());
+        }
+
+        // negative test
+
+        /// <summary>
+        /// AddAsync should throw internal error when Database connection is lost.
+        /// </summary>
+        [TestMethod]
+        public void AddAsyncShouldThrowInternalErrorWhenDatabaseConnectionIsLost()
+        {
+            // arrange
+            mockBookRepository.Setup(x => x.AddBookAsync(It.IsAny<Book>())).ThrowsAsync(new Exception("Unable to connect to database."));
+
+            var provider = GetServiceProvider();
+
+            var controller = new BooksController(provider.GetService<IBookManager>(), mockLogger.Object);
+            var bookDetails = new BookDetails()
+            {
+                Name = "TestBook",
+                AuthorName = "TestAuthorName"
+            };
+
+            // act
+            var result = controller.AddAsync(bookDetails).Result;
+
+            // assert
+            Assert.AreEqual(500, ((ObjectResult)result).StatusCode.Value);
+        }
+
+        /// <summary>
+        /// GetAsync should return status code as 404 when  o books are available.
+        /// </summary>
+        [TestMethod]
+        public void GetAsyncShouldReturnStatusCode404WhenNoBooIsAvailable()
+        {
+            // arrange
+            mockBookRepository.Setup(x => x.GetBookAsync(It.IsAny<Guid>())).ReturnsAsync((Book)null);
+
+            var provider = GetServiceProvider();
+
+            var controller = new BooksController(provider.GetService<IBookManager>(), mockLogger.Object);
+
+            // act
+            var result = controller.GetAsync(Guid.NewGuid()).Result;
+
+            // assert
+            Assert.AreEqual(404, ((ObjectResult)result).StatusCode.Value);
+        }
+
+        /// <summary>
+        /// GetAsync should return BadRequest when book identifier is invalid.
+        /// </summary>
+        [TestMethod]
+        public void GetAsyncShouldReturnBadRequestWhenBookIdentifierIsInvalid()
+        {
+            // arrange
+            mockBookRepository.Setup(x => x.GetBookAsync(It.IsAny<Guid>())).ReturnsAsync((Book)null);
+
+            var provider = GetServiceProvider();
+
+            var controller = new BooksController(provider.GetService<IBookManager>(), mockLogger.Object);
+
+            // act
+            var result = controller.GetAsync(default).Result;
+
+            // assert
+            Assert.AreEqual(400, ((ObjectResult)result).StatusCode.Value);
         }
 
         /// <summary>
